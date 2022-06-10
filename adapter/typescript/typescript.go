@@ -2,23 +2,25 @@ package typescript
 
 import (
 	"github.com/crqra/whatami/adapter"
+	"github.com/crqra/whatami/adapter/npm"
 	"github.com/crqra/whatami/file"
 )
 
 const (
-	ts       = "typescript"
-	tsExt    = ".ts"
-	tsxExt   = ".tsx"
-	tsc      = "tsc"
-	tsConfig = "tsconfig.json"
+	tsLang      = "typescript"
+	tsExt       = ".ts"
+	tsxExt      = ".tsx"
+	tscTool     = "tsc"
+	tsConfig    = "tsconfig.json"
+	pkgFilename = "package.json"
 )
 
 type TypeScriptAdapter struct{}
 
-func (a TypeScriptAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) {
-	if isTypeScriptFile(file) {
+func (a TypeScriptAdapter) FindLanguages(f *file.File) ([]*adapter.Language, error) {
+	if isTypeScriptFile(f) {
 		lang := &adapter.Language{
-			Name:    ts,
+			Name:    tsLang,
 			Version: "",
 		}
 
@@ -28,23 +30,57 @@ func (a TypeScriptAdapter) FindLanguages(file *file.File) ([]*adapter.Language, 
 	return nil, nil
 }
 
-func (a TypeScriptAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
-	if isTypeScriptFile(file) {
-		tool := &adapter.Tool{
-			Name:    tsc,
-			Version: "",
+func (a TypeScriptAdapter) FindTools(f *file.File) ([]*adapter.Tool, error) {
+	tool := &adapter.Tool{
+		Name:    tscTool,
+		Version: "",
+	}
+
+	if isPackageFile(f) {
+		dep, err := findDependency(f)
+		if err != nil {
+			return nil, err
 		}
 
+		if dep != nil {
+			tool.Version = dep.Version
+
+			return []*adapter.Tool{tool}, nil
+		}
+
+		return nil, nil
+	}
+
+	if isTypeScriptFile(f) {
 		return []*adapter.Tool{tool}, nil
 	}
 
 	return nil, nil
 }
 
-func (a TypeScriptAdapter) FindDependencies(file *file.File) ([]*adapter.Dependency, error) {
+func (a TypeScriptAdapter) FindDependencies(*file.File) ([]*adapter.Dependency, error) {
 	return nil, nil
 }
 
-func isTypeScriptFile(file *file.File) bool {
-	return file.Ext() == tsExt || file.Ext() == tsxExt || file.Name() == tsConfig
+func isTypeScriptFile(f *file.File) bool {
+	return f.Ext() == tsExt || f.Ext() == tsxExt || f.Name() == tsConfig
+}
+
+func isPackageFile(f *file.File) bool {
+	return f.Name() == pkgFilename
+}
+
+func findDependency(f *file.File) (*adapter.Dependency, error) {
+	pkg, err := npm.NewPKG(f.Path)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, dep := range pkg.Dependencies() {
+		if dep.Name == tsLang {
+			return dep, nil
+		}
+	}
+
+	return nil, nil
 }

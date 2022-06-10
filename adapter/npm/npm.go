@@ -7,6 +7,7 @@ import (
 
 const (
 	npmTool  = "npm"
+	nodeTool = "node"
 	pkgFile  = "package.json"
 	lockfile = "package-lock.json"
 )
@@ -19,12 +20,12 @@ func (a NPMAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) 
 
 func (a NPMAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
 	if isNPMFile(file) {
-		tool := &adapter.Tool{
-			Name:    npmTool,
-			Version: "",
+		tools := []*adapter.Tool{
+			{Name: nodeTool, Version: ""},
+			{Name: npmTool, Version: ""},
 		}
 
-		return []*adapter.Tool{tool}, nil
+		return tools, nil
 	}
 
 	return nil, nil
