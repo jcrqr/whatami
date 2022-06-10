@@ -141,5 +141,6 @@ This project is released under the [MIT License](LICENSE).
 [javascript-src]: https://github.com/crqra/whatami/blob/main/adapter/javascript/javascript.go
 [maven-src]: https://github.com/crqra/whatami/blob/main/adapter/maven/maven.go
 [npm-src]: https://github.com/crqra/whatami/blob/main/adapter/npm/npm.go
+[taskfile-src]: https://github.com/crqra/whatami/blob/main/adapter/taskfile/taskfile.go
 [typescript-src]: https://github.com/crqra/whatami/blob/main/adapter/typescript/typescript.go
 [yarn-src]: https://github.com/crqra/whatami/blob/main/adapter/yarn/yarn.go

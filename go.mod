@@ -6,6 +6,7 @@ require (
 	github.com/antchfx/jsonquery v1.2.0
 	github.com/antchfx/xmlquery v1.3.11
 	golang.org/x/mod v0.5.1
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
