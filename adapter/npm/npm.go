@@ -20,9 +20,14 @@ func (a NPMAdapter) FindLanguages(f *file.File) ([]*adapter.Language, error) {
 
 func (a NPMAdapter) FindTools(f *file.File) ([]*adapter.Tool, error) {
 	if isNPMFile(f) {
+		pkg, err := NewPKG(f.Path)
+		if err != nil {
+			return nil, err
+		}
+
 		tools := []*adapter.Tool{
-			{Name: nodeTool, Version: ""},
-			{Name: npmTool, Version: ""},
+			{Name: nodeTool, Version: pkg.NodeVersion()},
+			{Name: npmTool, Version: pkg.NPMVersion()},
 		}
 
 		return tools, nil

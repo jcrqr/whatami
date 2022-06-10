@@ -26,6 +26,26 @@ func NewPKG(path string) (*PKG, error) {
 	return &PKG{doc: doc}, nil
 }
 
+func (pkg PKG) NodeVersion() string {
+	node := jsonquery.FindOne(pkg.doc, "/engines/node")
+
+	if node == nil {
+		return ""
+	}
+
+	return node.InnerText()
+}
+
+func (pkg PKG) NPMVersion() string {
+	node := jsonquery.FindOne(pkg.doc, "/engines/npm")
+
+	if node == nil {
+		return ""
+	}
+
+	return node.InnerText()
+}
+
 func (pkg PKG) Dependencies() []*adapter.Dependency {
 	var (
 		deps          = []*adapter.Dependency{}
