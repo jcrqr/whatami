@@ -36,7 +36,7 @@ $ whatami -i node_modules
 ```
 
 <details>
-<summary>Toggle output</summary>
+<summary>See output</summary>
 
 ```json
 {
