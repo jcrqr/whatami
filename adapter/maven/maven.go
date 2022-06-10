@@ -6,21 +6,22 @@ import (
 )
 
 const (
-	maven = "maven"
-	pom   = "pom.xml"
+	mavenTool   = "maven"
+	javaLang    = "java"
+	pomFilename = "pom.xml"
 )
 
 type MavenAdapter struct{}
 
 func (a MavenAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) {
-	if file.Name() == pom {
-		pom, err := readPOM(file.Path)
+	if file.Name() == pomFilename {
+		pom, err := NewPOM(file.Path)
 		if err != nil {
 			return nil, err
 		}
 
 		lang := &adapter.Language{
-			Name:    "java",
+			Name:    javaLang,
 			Version: pom.JavaVersion(),
 		}
 
@@ -31,19 +32,19 @@ func (a MavenAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error
 }
 
 func (a MavenAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
-	if file.Name() == pom {
-		return []*adapter.Tool{{Name: maven}}, nil
+	if file.Name() == pomFilename {
+		return []*adapter.Tool{{Name: mavenTool}}, nil
 	}
 
 	return nil, nil
 }
 
 func (a MavenAdapter) FindDependencies(file *file.File) ([]*adapter.Dependency, error) {
-	if file.Name() != pom {
+	if file.Name() != pomFilename {
 		return nil, nil
 	}
 
-	pom, err := readPOM(file.Path)
+	pom, err := NewPOM(file.Path)
 	if err != nil {
 		return nil, err
 	}

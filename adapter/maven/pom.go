@@ -1,98 +1,107 @@
 package maven
 
 import (
-	"encoding/xml"
 	"fmt"
 	"os"
+	"regexp"
 
+	"github.com/antchfx/xmlquery"
 	"github.com/crqra/whatami/adapter"
 )
 
 type POM struct {
-	XMLName              xml.Name             `xml:"project"`
-	Version              string               `xml:"version"`
-	Parent               *Parent              `xml:"parent"`
-	Properties           *Properties          `xml:"properties"`
-	DependencyManagement DependencyManagement `xml:"dependencyManagement"`
+	doc *xmlquery.Node
 }
 
-func readPOM(absPath string) (*POM, error) {
-	data, err := os.ReadFile(absPath)
+func NewPOM(path string) (*POM, error) {
+	f, err := os.Open(path)
 	if err != nil {
-		panic(err)
+		return nil, err
+	}
+	defer f.Close()
+
+	doc, err := xmlquery.Parse(f)
+	if err != nil {
+		return nil, err
 	}
 
-	var pom POM
-	if err := xml.Unmarshal(data, &pom); err != nil {
-		panic(err)
-	}
-
-	return &pom, nil
+	return &POM{doc: doc}, nil
 }
 
 func (pom POM) JavaVersion() string {
-	for _, prop := range pom.Properties.Property {
-		if prop.XMLName.Local == "java.version" {
-			return string(prop.Value)
-		}
+	prop := xmlquery.FindOne(pom.doc, "/project/properties/java.version")
+	if prop != nil {
+		return prop.InnerText()
 	}
 
 	return ""
 }
 
 func (pom POM) Dependencies() []*adapter.Dependency {
-	deps := []*adapter.Dependency{}
+	var (
+		deps    = []*adapter.Dependency{}
+		rawDeps = xmlquery.Find(pom.doc, "/project/dependencyManagement/dependencies/dependency")
+	)
 
-	if pom.Parent != nil {
-		deps = append(deps, &adapter.Dependency{
-			Name:    fmt.Sprintf("%s.%s", pom.Parent.GroupID, pom.Parent.ArtifactID),
-			Version: pom.Parent.Version,
-			Type:    "parent",
-		})
+	for _, dep := range rawDeps {
+		deps = append(deps, parseDependencyElement(pom.doc, dep))
 	}
 
-	for _, dep := range pom.DependencyManagement.Dependencies.Dependencies {
-		deps = append(deps, &adapter.Dependency{
-			Name:    fmt.Sprintf("%s.%s", dep.GroupID, dep.ArtifactID),
-			Version: dep.Version,
-			Type:    dep.Scope,
-		})
+	rawParent := xmlquery.FindOne(pom.doc, "/project/parent")
+	if rawParent != nil {
+		dep := parseDependencyElement(pom.doc, rawParent)
+		dep.Type = "parent"
+
+		deps = append(deps, dep)
 	}
 
 	return deps
 }
 
-type Parent struct {
-	XMLName    xml.Name `xml:"parent"`
-	GroupID    string   `xml:"groupId"`
-	ArtifactID string   `xml:"artifactId"`
-	Version    string   `xml:"version"`
+func parseDependencyElement(doc *xmlquery.Node, dep *xmlquery.Node) *adapter.Dependency {
+	var (
+		groupId    string
+		artifactId string
+		version    string
+		scope      string
+	)
+
+	if id := dep.SelectElement("groupId"); id != nil {
+		groupId = id.InnerText()
+	}
+
+	if id := dep.SelectElement("artifactId"); id != nil {
+		artifactId = id.InnerText()
+	}
+
+	if v := dep.SelectElement("version"); v != nil {
+		version = findVersion(doc, v.InnerText())
+	}
+
+	if s := dep.SelectElement("scope"); s != nil {
+		scope = s.InnerText()
+	}
+
+	return &adapter.Dependency{
+		Name:    fmt.Sprintf("%s.%s", groupId, artifactId),
+		Version: version,
+		Type:    scope,
+	}
 }
 
-type Properties struct {
-	XMLName  xml.Name   `xml:"properties"`
-	Property []Property `xml:",any"`
-}
+func findVersion(doc *xmlquery.Node, version string) string {
+	re := regexp.MustCompile("\\${(.*)}")
+	matches := re.FindStringSubmatch(version)
 
-type Property struct {
-	XMLName xml.Name
-	Value   []byte `xml:",chardata"`
-}
+	//nolint:gomnd
+	if len(matches) != 2 {
+		return version
+	}
 
-type DependencyManagement struct {
-	XMLName      xml.Name     `xml:"dependencyManagement"`
-	Dependencies Dependencies `xml:"dependencies"`
-}
+	vProp := xmlquery.FindOne(doc, "/project/properties/"+matches[1])
+	if vProp == nil {
+		return version
+	}
 
-type Dependencies struct {
-	XMLName      xml.Name     `xml:"dependencies"`
-	Dependencies []Dependency `xml:"dependency"`
-}
-
-type Dependency struct {
-	XMLName    xml.Name `xml:"dependency"`
-	GroupID    string   `xml:"groupId"`
-	ArtifactID string   `xml:"artifactId"`
-	Version    string   `xml:"version"`
-	Scope      string   `xml:"scope"`
+	return vProp.InnerText()
 }
