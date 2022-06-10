@@ -3,6 +3,35 @@
 > What Am I? - point to a project and see what tools, languages and dependencies
 > it has.
 
+## About
+
+### What?
+
+Tool that recursively walks a directory and based on the files present derives:
+
+- Tools: package managers, compilers, linters, etc.
+- Languages: markup, configuration and programming languages
+- Dependencies: software dependencies from package managers configuration
+
+For each of the above a version _may_ be available in which case it's included.
+
+### Why?
+
+My main use case is to use the information outputted to create dynamic CI/CD
+pipelines. Based on the output, I know what tools I need to have in place for a
+particular project and can even infer what commands I can run to do certain tasks
+like building or testing the project.
+
+### How?
+
+For each file or directory found while walking, a set of pre-defined _adapters_
+is executed to derive tools, languages and dependencies.
+
+If more than one adapter finds the same tools, languages or dependencies, they're
+de-duplicated based on the version. Wins the first tool, language or dependency
+that for which a version was found (regardless if subsequent findings also have
+a version).
+
 ## Installing
 
 ```console
@@ -65,6 +94,6 @@ $ whatami -i node_modules
 
 </details>
 
-# License
+## License
 
 This project is released under the [MIT License](LICENSE).
