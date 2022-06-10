@@ -3,17 +3,17 @@ package adapter
 import "github.com/crqra/whatami/file"
 
 type Language struct {
-	Name    string `json:"name"`
+	Name    string `json:"-"`
 	Version string `json:"version"`
 }
 
 type Tool struct {
-	Name    string `json:"name"`
+	Name    string `json:"-"`
 	Version string `json:"version"`
 }
 
 type Dependency struct {
-	Name    string `json:"name"`
+	Name    string `json:"-"`
 	Version string `json:"version"`
 	Type    string `json:"type"`
 }
