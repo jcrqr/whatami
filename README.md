@@ -41,32 +41,24 @@ $ whatami -i node_modules
 ```json
 {
   "tools": {
-    "npm": {
-      "name": "npm",
-      "version": ""
-    },
+    "node": {},
+    "npm": {},
     "tsc": {
-      "name": "tsc",
-      "version": ""
+      "version": "^4.7.3"
     }
   },
   "dependencies": {
     "express": {
-      "name": "express",
       "version": "^4.18.1",
       "type": "production"
     },
     "typescript": {
-      "name": "typescript",
       "version": "^4.7.3",
       "type": "development"
     }
   },
   "languages": {
-    "typescript": {
-      "name": "typescript",
-      "version": ""
-    }
+    "typescript": {}
   }
 }
 ```
