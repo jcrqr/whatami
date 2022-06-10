@@ -11,7 +11,7 @@ Tool that recursively walks a directory and based on the files present derives:
 
 - Tools: package managers, compilers, linters, etc.
 - Languages: markup, configuration and programming languages
-- Dependencies: software dependencies from package managers configuration
+- Dependencies: software dependencies from package managers configuration files
 
 For each of the above a version _may_ be available in which case it's included.
 
