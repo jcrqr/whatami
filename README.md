@@ -118,14 +118,26 @@ See the links in the list of supported adapters below for example implementation
 ### Supported
 
 - [Docker][docker-src]
+  - Tools: `docker`
 - [Go][go-src]
+  - Tools: `go`
+  - Languages: `go`
 - [Java][java-src]
+  - Languages: `java`
 - [JavaScript][javascript-src]
+  - Languages: `javascript`
 - [Maven][maven-src]
+  - Tools: `mvn`
+  - Languages: `java`
 - [NPM][npm-src]
+  - Tools: `node`, `npm`
 - [Taskfile][taskfile-src]
+  - Tools: `task`
 - [TypeScript][typescript-src]
+  - Tools: `tsc`
+  - Languages: `typescript`
 - [Yarn][yarn-src]
+  - Tools: `yarn`
 
 If the adapter you need is not on the list above, please open an [issue][issues]
 or a [pull request][pulls].
