@@ -140,7 +140,7 @@ See the links in the list of supported adapters below for example implementation
   - Tools: `yarn`
 
 If the adapter you need is not on the list above, please open an [issue][issues]
-or a [pull request][pulls].
+or a [pull request][pulls]. Use the [adapter template][adapter-tpl] to get started.
 
 ## License
 
@@ -148,6 +148,7 @@ This project is released under the [MIT License](LICENSE).
 
 [issues]: https://github.com/crqra/whatami/issues
 [pulls]: https://github.com/crqra/whatami/pulls
+[adapter-tpl]: https://github.com/crqra/whatami/tree/main/adapter/_template
 [docker-src]: https://github.com/crqra/whatami/blob/main/adapter/docker/docker.go
 [go-src]: https://github.com/crqra/whatami/blob/main/adapter/golang/golang.go
 [java-src]: https://github.com/crqra/whatami/blob/main/adapter/java/java.go
