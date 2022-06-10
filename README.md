@@ -94,6 +94,44 @@ $ whatami -i node_modules
 
 </details>
 
+## Adapters
+
+An _adapter_ is an interface that implements the functionality to derive one or
+more tools, languages or dependencies based on a given _file_.
+
+```go
+type Adapter interface {
+	FindTools(f *file.File) ([]*Tool, error)
+	FindDependencies(f *file.File) ([]*Dependency, error)
+	FindLanguages(f *file.File) ([]*Language, error)
+}
+```
+
+See the links in the list of supported adapters below for example implementations.
+
+### Supported
+
+- [Docker][docker-src]
+- [Java][java-src]
+- [JavaScript][javascript-src]
+- [Maven][maven-src]
+- [NPM][npm-src]
+- [TypeScript][typescript-src]
+- [Yarn][yarn-src]
+
+If the adapter you need is not on the list above, please open an [issue][issues]
+or a [pull request][pulls].
+
 ## License
 
 This project is released under the [MIT License](LICENSE).
+
+[issues]: https://github.com/crqra/whatami/issues
+[pulls]: https://github.com/crqra/whatami/pulls
+[docker-src]: https://github.com/crqra/whatami/blob/main/adapter/docker/docker.go
+[java-src]: https://github.com/crqra/whatami/blob/main/adapter/java/java.go
+[javascript-src]: https://github.com/crqra/whatami/blob/main/adapter/javascript/javascript.go
+[maven-src]: https://github.com/crqra/whatami/blob/main/adapter/maven/maven.go
+[npm-src]: https://github.com/crqra/whatami/blob/main/adapter/npm/npm.go
+[typescript-src]: https://github.com/crqra/whatami/blob/main/adapter/typescript/typescript.go
+[yarn-src]: https://github.com/crqra/whatami/blob/main/adapter/yarn/yarn.go
