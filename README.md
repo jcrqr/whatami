@@ -112,6 +112,7 @@ See the links in the list of supported adapters below for example implementation
 ### Supported
 
 - [Docker][docker-src]
+- [Go][go-src]
 - [Java][java-src]
 - [JavaScript][javascript-src]
 - [Maven][maven-src]
@@ -129,6 +130,7 @@ This project is released under the [MIT License](LICENSE).
 [issues]: https://github.com/crqra/whatami/issues
 [pulls]: https://github.com/crqra/whatami/pulls
 [docker-src]: https://github.com/crqra/whatami/blob/main/adapter/docker/docker.go
+[go-src]: https://github.com/crqra/whatami/blob/main/adapter/golang/golang.go
 [java-src]: https://github.com/crqra/whatami/blob/main/adapter/java/java.go
 [javascript-src]: https://github.com/crqra/whatami/blob/main/adapter/javascript/javascript.go
 [maven-src]: https://github.com/crqra/whatami/blob/main/adapter/maven/maven.go

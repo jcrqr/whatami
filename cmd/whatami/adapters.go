@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/crqra/whatami/adapter"
 	"github.com/crqra/whatami/adapter/docker"
+	"github.com/crqra/whatami/adapter/golang"
 	"github.com/crqra/whatami/adapter/java"
 	"github.com/crqra/whatami/adapter/javascript"
 	"github.com/crqra/whatami/adapter/maven"
@@ -14,6 +15,7 @@ import (
 func registeredAdapters() []adapter.Adapter {
 	return []adapter.Adapter{
 		&docker.DockerAdapter{},
+		&golang.GolangAdapter{},
 		&java.JavaAdapter{},
 		&javascript.JavaScriptAdapter{},
 		&maven.MavenAdapter{},
