@@ -13,7 +13,7 @@ $ go install github.com/crqra/whatami/cmd/whatami@latest
 
 ```
 $ whatami -h
-usage: whatami [-h] [-e=<PATH> ...] [-i=<PATH> ...] [directory]
+usage: whatami [-h] [-i=<PATH> ...] [directory]
 ```
 
 ### Flags
