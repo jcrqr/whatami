@@ -18,11 +18,26 @@ const (
 type TypeScriptAdapter struct{}
 
 func (a TypeScriptAdapter) FindLanguages(f *file.File) ([]*adapter.Language, error) {
+	lang := &adapter.Language{
+		Name:    tsLang,
+		Version: "",
+	}
+
 	if isTypeScriptFile(f) {
-		lang := &adapter.Language{
-			Name:    tsLang,
-			Version: "",
+		return []*adapter.Language{lang}, nil
+	}
+
+	if isPackageFile(f) {
+		dep, err := findDependency(f)
+		if err != nil {
+			return nil, err
 		}
+
+		if dep == nil {
+			return nil, nil
+		}
+
+		lang.Version = dep.Version
 
 		return []*adapter.Language{lang}, nil
 	}
