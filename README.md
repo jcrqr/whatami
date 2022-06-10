@@ -133,6 +133,9 @@ See the links in the list of supported adapters below for example implementation
   - Tools: `node`, `npm`
 - [Taskfile][taskfile-src]
   - Tools: `task`
+- [Terraform][terraform-src]
+  - Tools: `terraform`
+  - Languages: `hcl`
 - [TypeScript][typescript-src]
   - Tools: `tsc`
   - Languages: `typescript`
