@@ -122,6 +122,8 @@ See the links in the list of supported adapters below for example implementation
 - [Go][go-src]
   - Tools: `go`
   - Languages: `go`
+- [HCL][hcl-src]
+  - Languages: `hcl`
 - [Java][java-src]
   - Languages: `java`
 - [JavaScript][javascript-src]
@@ -154,6 +156,7 @@ This project is released under the [MIT License](LICENSE).
 [adapter-tpl]: https://github.com/crqra/whatami/tree/main/adapter/_template
 [docker-src]: https://github.com/crqra/whatami/blob/main/adapter/docker/docker.go
 [go-src]: https://github.com/crqra/whatami/blob/main/adapter/golang/golang.go
+[hcl-src]: https://github.com/crqra/whatami/blob/main/adapter/hcl/hcl.go
 [java-src]: https://github.com/crqra/whatami/blob/main/adapter/java/java.go
 [javascript-src]: https://github.com/crqra/whatami/blob/main/adapter/javascript/javascript.go
 [maven-src]: https://github.com/crqra/whatami/blob/main/adapter/maven/maven.go
