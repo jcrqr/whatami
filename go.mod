@@ -2,7 +2,10 @@ module github.com/crqra/whatami
 
 go 1.18
 
-require github.com/antchfx/xmlquery v1.3.11
+require (
+	github.com/antchfx/jsonquery v1.2.0
+	github.com/antchfx/xmlquery v1.3.11
+)
 
 require (
 	github.com/antchfx/xpath v1.2.1 // indirect

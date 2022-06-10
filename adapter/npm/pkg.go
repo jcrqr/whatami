@@ -1,47 +1,50 @@
 package npm
 
 import (
-	"encoding/json"
 	"os"
 
+	"github.com/antchfx/jsonquery"
 	"github.com/crqra/whatami/adapter"
 )
 
-type pkg struct {
-	Dependencies    map[string]string `json:"dependencies"`
-	DevDependencies map[string]string `json:"devDependencies"`
+type PKG struct {
+	doc *jsonquery.Node
 }
 
-func readPkg(path string) (*pkg, error) {
-	data, err := os.ReadFile(path)
+func NewPKG(path string) (*PKG, error) {
+	f, err := os.Open(path)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
+	defer f.Close()
 
-	var pkg *pkg
-
-	if err := json.Unmarshal(data, &pkg); err != nil {
+	doc, err := jsonquery.Parse(f)
+	if err != nil {
 		return nil, err
 	}
 
-	return pkg, nil
+	return &PKG{doc: doc}, nil
 }
 
-func (pkg pkg) allDependencies() []*adapter.Dependency {
-	deps := []*adapter.Dependency{}
+func (pkg PKG) Dependencies() []*adapter.Dependency {
+	var (
+		deps          = []*adapter.Dependency{}
+		rawDeps, _    = jsonquery.QueryAll(pkg.doc, "/dependencies/*")
+		rawDevDeps, _ = jsonquery.QueryAll(pkg.doc, "/devDependencies/*")
+	)
 
-	for name, version := range pkg.Dependencies {
+	for _, dep := range rawDeps {
 		deps = append(deps, &adapter.Dependency{
-			Name:    name,
-			Version: version,
+			Name:    dep.Data,
+			Version: dep.InnerText(),
 			Type:    "production",
 		})
 	}
 
-	for name, version := range pkg.DevDependencies {
+	for _, dep := range rawDevDeps {
 		deps = append(deps, &adapter.Dependency{
-			Name:    name,
-			Version: version,
+			Name:    dep.Data,
+			Version: dep.InnerText(),
 			Type:    "development",
 		})
 	}
