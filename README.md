@@ -70,8 +70,12 @@ $ whatami -i node_modules
 ```json
 {
   "tools": {
-    "node": {},
-    "npm": {},
+    "node": {
+      "version": "~15"
+    },
+    "npm": {
+      "version": "~1.0.20"
+    },
     "tsc": {
       "version": "^4.7.3"
     }
@@ -87,7 +91,9 @@ $ whatami -i node_modules
     }
   },
   "languages": {
-    "typescript": {}
+    "typescript": {
+      "version": "^4.7.3"
+    }
   }
 }
 ```
