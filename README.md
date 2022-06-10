@@ -19,8 +19,8 @@ For each of the above a version _may_ be available in which case it's included.
 
 My main use case is to use the information outputted to create dynamic CI/CD
 pipelines. Based on the output, I know what tools I need to have in place for a
-particular project and can even infer what commands I can run to do certain tasks
-like building or testing the project.
+particular project and can even infer what commands I can run to perform certain
+tasks like building or testing the project.
 
 ### How?
 
