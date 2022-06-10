@@ -123,6 +123,7 @@ See the links in the list of supported adapters below for example implementation
 - [JavaScript][javascript-src]
 - [Maven][maven-src]
 - [NPM][npm-src]
+- [Taskfile][taskfile-src]
 - [TypeScript][typescript-src]
 - [Yarn][yarn-src]
 
