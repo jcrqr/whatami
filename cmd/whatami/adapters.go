@@ -9,6 +9,7 @@ import (
 	"github.com/crqra/whatami/adapter/maven"
 	"github.com/crqra/whatami/adapter/npm"
 	"github.com/crqra/whatami/adapter/taskfile"
+	"github.com/crqra/whatami/adapter/terraform"
 	"github.com/crqra/whatami/adapter/typescript"
 	"github.com/crqra/whatami/adapter/yarn"
 )
@@ -22,6 +23,7 @@ func registeredAdapters() []adapter.Adapter {
 		&maven.MavenAdapter{},
 		&npm.NPMAdapter{},
 		&taskfile.TaskfileAdapter{},
+		&terraform.TerraformAdapter{},
 		&typescript.TypeScriptAdapter{},
 		&yarn.YarnAdapter{},
 	}
