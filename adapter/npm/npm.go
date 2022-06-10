@@ -14,12 +14,12 @@ const (
 
 type NPMAdapter struct{}
 
-func (a NPMAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) {
+func (a NPMAdapter) FindLanguages(f *file.File) ([]*adapter.Language, error) {
 	return nil, nil
 }
 
-func (a NPMAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
-	if isNPMFile(file) {
+func (a NPMAdapter) FindTools(f *file.File) ([]*adapter.Tool, error) {
+	if isNPMFile(f) {
 		tools := []*adapter.Tool{
 			{Name: nodeTool, Version: ""},
 			{Name: npmTool, Version: ""},
@@ -31,12 +31,12 @@ func (a NPMAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
 	return nil, nil
 }
 
-func (a NPMAdapter) FindDependencies(file *file.File) ([]*adapter.Dependency, error) {
-	if file.Name() != pkgFile {
+func (a NPMAdapter) FindDependencies(f *file.File) ([]*adapter.Dependency, error) {
+	if f.Name() != pkgFile {
 		return nil, nil
 	}
 
-	pkg, err := NewPKG(file.Path)
+	pkg, err := NewPKG(f.Path)
 	if err != nil {
 		return nil, err
 	}
@@ -44,6 +44,6 @@ func (a NPMAdapter) FindDependencies(file *file.File) ([]*adapter.Dependency, er
 	return pkg.Dependencies(), nil
 }
 
-func isNPMFile(file *file.File) bool {
-	return file.Name() == pkgFile || file.Name() == lockfile
+func isNPMFile(f *file.File) bool {
+	return f.Name() == pkgFile || f.Name() == lockfile
 }

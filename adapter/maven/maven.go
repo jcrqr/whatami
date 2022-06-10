@@ -13,9 +13,9 @@ const (
 
 type MavenAdapter struct{}
 
-func (a MavenAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) {
-	if file.Name() == pomFilename {
-		pom, err := NewPOM(file.Path)
+func (a MavenAdapter) FindLanguages(f *file.File) ([]*adapter.Language, error) {
+	if f.Name() == pomFilename {
+		pom, err := NewPOM(f.Path)
 		if err != nil {
 			return nil, err
 		}
@@ -31,20 +31,20 @@ func (a MavenAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error
 	return nil, nil
 }
 
-func (a MavenAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
-	if file.Name() == pomFilename {
+func (a MavenAdapter) FindTools(f *file.File) ([]*adapter.Tool, error) {
+	if f.Name() == pomFilename {
 		return []*adapter.Tool{{Name: mavenTool}}, nil
 	}
 
 	return nil, nil
 }
 
-func (a MavenAdapter) FindDependencies(file *file.File) ([]*adapter.Dependency, error) {
-	if file.Name() != pomFilename {
+func (a MavenAdapter) FindDependencies(f *file.File) ([]*adapter.Dependency, error) {
+	if f.Name() != pomFilename {
 		return nil, nil
 	}
 
-	pom, err := NewPOM(file.Path)
+	pom, err := NewPOM(f.Path)
 	if err != nil {
 		return nil, err
 	}

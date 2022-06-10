@@ -19,14 +19,14 @@ func (a DockerAdapter) FindLanguages(*file.File) ([]*adapter.Language, error) {
 	return nil, nil
 }
 
-func (a DockerAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
+func (a DockerAdapter) FindTools(f *file.File) ([]*adapter.Tool, error) {
 	tools := []*adapter.Tool{}
 
-	if strings.HasPrefix(file.Name(), dockerfile) {
+	if strings.HasPrefix(f.Name(), dockerfile) {
 		tools = append(tools, &adapter.Tool{Name: docker})
 	}
 
-	if strings.Replace(file.Name(), file.Ext(), "", 1) == dockerCompose {
+	if strings.Replace(f.Name(), f.Ext(), "", 1) == dockerCompose {
 		tools = append(tools, &adapter.Tool{Name: dockerCompose})
 	}
 

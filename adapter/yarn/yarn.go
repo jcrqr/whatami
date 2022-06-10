@@ -12,12 +12,12 @@ const (
 
 type YarnAdapter struct{}
 
-func (a YarnAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) {
+func (a YarnAdapter) FindLanguages(*file.File) ([]*adapter.Language, error) {
 	return nil, nil
 }
 
-func (a YarnAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
-	if isYarnFile(file) {
+func (a YarnAdapter) FindTools(f *file.File) ([]*adapter.Tool, error) {
+	if isYarnFile(f) {
 		tool := &adapter.Tool{
 			Name:    yarn,
 			Version: "",
@@ -29,10 +29,10 @@ func (a YarnAdapter) FindTools(file *file.File) ([]*adapter.Tool, error) {
 	return nil, nil
 }
 
-func (a YarnAdapter) FindDependencies(file *file.File) ([]*adapter.Dependency, error) {
+func (a YarnAdapter) FindDependencies(*file.File) ([]*adapter.Dependency, error) {
 	return nil, nil
 }
 
-func isYarnFile(file *file.File) bool {
-	return file.Name() == lockfile
+func isYarnFile(f *file.File) bool {
+	return f.Name() == lockfile
 }

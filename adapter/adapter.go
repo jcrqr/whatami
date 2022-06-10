@@ -19,7 +19,7 @@ type Dependency struct {
 }
 
 type Adapter interface {
-	FindTools(*file.File) ([]*Tool, error)
-	FindDependencies(*file.File) ([]*Dependency, error)
-	FindLanguages(*file.File) ([]*Language, error)
+	FindTools(f *file.File) ([]*Tool, error)
+	FindDependencies(f *file.File) ([]*Dependency, error)
+	FindLanguages(f *file.File) ([]*Language, error)
 }

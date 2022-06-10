@@ -12,8 +12,8 @@ const (
 
 type JavaAdapter struct{}
 
-func (a JavaAdapter) FindLanguages(file *file.File) ([]*adapter.Language, error) {
-	if file.Ext() == validExt {
+func (a JavaAdapter) FindLanguages(f *file.File) ([]*adapter.Language, error) {
+	if f.Ext() == validExt {
 		return []*adapter.Language{{Name: langName}}, nil
 	}
 
