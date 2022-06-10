@@ -159,5 +159,6 @@ This project is released under the [MIT License](LICENSE).
 [maven-src]: https://github.com/crqra/whatami/blob/main/adapter/maven/maven.go
 [npm-src]: https://github.com/crqra/whatami/blob/main/adapter/npm/npm.go
 [taskfile-src]: https://github.com/crqra/whatami/blob/main/adapter/taskfile/taskfile.go
+[terraform-src]: https://github.com/crqra/whatami/blob/main/adapter/terraform/terraform.go
 [typescript-src]: https://github.com/crqra/whatami/blob/main/adapter/typescript/typescript.go
 [yarn-src]: https://github.com/crqra/whatami/blob/main/adapter/yarn/yarn.go
